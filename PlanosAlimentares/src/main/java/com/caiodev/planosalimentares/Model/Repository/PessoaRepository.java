@@ -3,8 +3,14 @@ package com.caiodev.planosalimentares.Model.Repository;
 import com.caiodev.planosalimentares.Model.Entity.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
-    Long findIdByNome(String nome);
+import java.util.Optional;
 
-    void deleteByNome(String nome);
+public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
+
+
+    void delete(Pessoa pessoa);
+
+    Optional<Pessoa> findByNome(String nome);
+
+
 }
