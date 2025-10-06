@@ -27,6 +27,5 @@ public class Pessoa {
         this.altura = pessoaDTO.altura();
         this.nome = pessoaDTO.nome();
         this.idade = pessoaDTO.idade();
-        this.planoAlimentar = pessoaDTO.planoAlimentar();
     }
 }

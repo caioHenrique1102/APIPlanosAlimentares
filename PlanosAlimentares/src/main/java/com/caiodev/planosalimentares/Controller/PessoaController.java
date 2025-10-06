@@ -1,46 +1,52 @@
 package com.caiodev.planosalimentares.Controller;
-
 import com.caiodev.planosalimentares.DTO.PessoaDTO;
 import com.caiodev.planosalimentares.Model.Entity.Pessoa;
-import com.caiodev.planosalimentares.Model.Repository.PessoaRepository;
 import com.caiodev.planosalimentares.Service.PessoaService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
-    private final PessoaRepository pessoaRepository;
     private PessoaService pessoaService;
 
-    public PessoaController(PessoaService pessoaService, PessoaRepository pessoaRepository) {
+    public PessoaController(PessoaService pessoaService) {
         this.pessoaService = pessoaService;
-        this.pessoaRepository = pessoaRepository;
+
     }
 
+    @Operation(summary = "Cria uma nova pessoa",
+             description = "Usado para cadastrar uma pessoa que tem um plano alimentar")
     @PostMapping("/cadastro")
     public ResponseEntity<Pessoa> cadastrar(@RequestBody PessoaDTO pessoaDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastrar(new Pessoa(pessoaDTO)));
     }
-
+    @Operation(summary = "Listar todas as pessoas",
+            description = " Usado para listar todas as pessoas que estão associadas a plano alimentar")
     @GetMapping("/listar")
     public ResponseEntity <List<Pessoa>> listar(){
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.listar());
     }
 
+    @Operation(summary = "Altera os dados da pessoa",
+            description = "Usado para alterar todos os dados da pessoa pelo nome")
     @PutMapping("/alterar/{nome}")
     public ResponseEntity<Pessoa> alterar(@RequestBody PessoaDTO pessoaDTO, @PathVariable String nome){
       return ResponseEntity.status(HttpStatus.OK).body(pessoaService.alterar(nome, pessoaDTO));
     }
-
+    @Operation(summary = "Busca a pessoa",
+            description = "Usado para buscar a pessoa pelo nome")
     @GetMapping("/buscar/{nome}")
     public ResponseEntity <Pessoa> buscar(@PathVariable String nome){
         return ResponseEntity.status(HttpStatus.FOUND).body(pessoaService.buscar(nome));
     }
-
+    @Operation(summary = "Deleta pessoa",
+            description = "Usado para deleta a pessoa pelo nome")
     @DeleteMapping("/deletar/{nome}")
     public ResponseEntity <Void> deletar(@PathVariable String nome){
         pessoaService.deletar(nome);
