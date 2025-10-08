@@ -1,6 +1,6 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
-import com.caiodev.planosalimentares.DTO.PlanoAlimentarDTO;
+import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,18 +10,17 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_plano_alimentar")
+@Table(name = "tb_refeicao")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlanoAlimentar {
+public class Refeicao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @OneToMany
-    private List<Refeicao> refeicao;
-    public PlanoAlimentar(PlanoAlimentarDTO planoAlimentarDTO){
-
-    }
+    Long id;
+    @ManyToMany
+    private List <Alimentos> alimentos;
+    @Enumerated(EnumType.STRING)
+    private TipoRefeicoes tipoRefeicoes;
 }

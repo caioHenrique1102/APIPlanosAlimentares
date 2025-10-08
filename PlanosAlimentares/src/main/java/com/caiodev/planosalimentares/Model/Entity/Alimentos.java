@@ -1,27 +1,23 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
-import com.caiodev.planosalimentares.DTO.PlanoAlimentarDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Table(name = "tb_plano_alimentar")
+@Table(name = "tb_alimentos")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlanoAlimentar {
+public class Alimentos {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @OneToMany
-    private List<Refeicao> refeicao;
-    public PlanoAlimentar(PlanoAlimentarDTO planoAlimentarDTO){
+    private Long Id;
+    private String nome;
+    private int quantidade;
 
-    }
 }
