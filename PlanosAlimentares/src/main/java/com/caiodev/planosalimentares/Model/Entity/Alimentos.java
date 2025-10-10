@@ -1,5 +1,6 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
+import com.caiodev.planosalimentares.DTO.AlimentosDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +21,8 @@ public class Alimentos {
     private String nome;
     private int quantidade;
 
+    public Alimentos(AlimentosDTO alimentosDTO) {
+        this.nome = alimentosDTO.nome();
+        this.quantidade = alimentosDTO.quantidade();
+    }
 }

@@ -1,6 +1,5 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
-import com.caiodev.planosalimentares.DTO.PlanoAlimentarDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +20,4 @@ public class PlanoAlimentar {
     private Long id;
     @OneToMany
     private List<Refeicao> refeicao;
-    public PlanoAlimentar(PlanoAlimentarDTO planoAlimentarDTO){
-
-    }
 }
