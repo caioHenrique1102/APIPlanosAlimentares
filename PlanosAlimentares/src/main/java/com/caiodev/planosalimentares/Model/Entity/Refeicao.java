@@ -1,5 +1,6 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
+import com.caiodev.planosalimentares.DTO.RefeicaoDTO;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,9 @@ public class Refeicao {
     private List <Alimentos> alimentos;
     @Enumerated(EnumType.STRING)
     private TipoRefeicoes tipoRefeicoes;
+
+    public Refeicao(RefeicaoDTO refeicaoDTO){
+        this.alimentos = refeicaoDTO.alimentos();
+        this.tipoRefeicoes = refeicaoDTO.tipoRefeicoes();
+    }
 }

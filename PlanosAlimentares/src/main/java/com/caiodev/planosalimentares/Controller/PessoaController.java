@@ -24,7 +24,8 @@ public class PessoaController {
              description = "Usado para cadastrar uma pessoa que tem um plano alimentar")
     @PostMapping("/cadastro")
     public ResponseEntity<Pessoa> cadastrar(@RequestBody PessoaDTO pessoaDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastrar(new Pessoa(pessoaDTO)));
+        Pessoa pessoa = new Pessoa(pessoaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastrar(pessoa));
     }
     @Operation(summary = "Listar todas as pessoas",
             description = " Usado para listar todas as pessoas que estão associadas a plano alimentar")

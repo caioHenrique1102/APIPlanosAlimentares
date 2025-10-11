@@ -4,6 +4,7 @@ import com.caiodev.planosalimentares.DTO.AlimentosDTO;
 import com.caiodev.planosalimentares.Exception.AlimentoNotFoundExeption;
 import com.caiodev.planosalimentares.Model.Entity.Alimentos;
 import com.caiodev.planosalimentares.Model.Repository.AlimentosRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class AlimentosService {
         return alimentosRepository.save(alimentos);
     }
 
+    @Transactional
     public Alimentos alterar(String nome,AlimentosDTO alimentosDTO){
         Optional <Alimentos> buscar = alimentosRepository.findByNome(nome);
 
@@ -29,9 +31,18 @@ public class AlimentosService {
         
         Alimentos alimentos = buscar.get();
         alimentos.setNome(alimentosDTO.nome());
-        alimentos.setQuantidade(alimentosDTO.quantidade());
-
+        alimentos.setQuantidade_alimento(alimentosDTO.quantidade_alimento());
         return alimentosRepository.save(alimentos);
+
+    }
+    @Transactional
+    public void deletar(String nome){
+        Optional<Alimentos> buscar =  alimentosRepository.findByNome(nome);
+
+        if(buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
+
+        Alimentos alimentos = buscar.get();
+        alimentosRepository.delete(alimentos);
 
     }
 

@@ -1,4 +1,4 @@
 package com.caiodev.planosalimentares.DTO;
 
-public record AlimentosDTO(String nome, int quantidade) {
+public record AlimentosDTO(String nome, String quantidade) {
 }
