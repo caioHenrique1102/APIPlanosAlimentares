@@ -20,7 +20,7 @@ public class Refeicao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @ManyToMany
+    @OneToMany
     private List <Alimentos> alimentos;
     @Enumerated(EnumType.STRING)
     private TipoRefeicoes tipoRefeicoes;

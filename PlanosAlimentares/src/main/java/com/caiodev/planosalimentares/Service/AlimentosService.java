@@ -31,7 +31,7 @@ public class AlimentosService {
         
         Alimentos alimentos = buscar.get();
         alimentos.setNome(alimentosDTO.nome());
-        alimentos.setQuantidade_alimento(alimentosDTO.quantidade_alimento());
+        alimentos.setQuantidade(alimentosDTO.quantidade());
         return alimentosRepository.save(alimentos);
 
     }
