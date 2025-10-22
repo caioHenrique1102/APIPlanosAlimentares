@@ -3,11 +3,13 @@ package com.caiodev.planosalimentares.Model.Entity;
 import com.caiodev.planosalimentares.DTO.RefeicaoDTO;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +23,8 @@ public class Refeicao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @OneToMany
-    private List <Alimentos> alimentos;
+    @NotNull
+    private List <Alimentos> alimentos = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private TipoRefeicoes tipoRefeicoes;
 

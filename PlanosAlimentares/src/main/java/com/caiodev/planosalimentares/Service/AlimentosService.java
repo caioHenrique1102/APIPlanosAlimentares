@@ -23,7 +23,7 @@ public class AlimentosService {
 
     @Transactional
     public Alimentos alterar(String nome,AlimentosDTO alimentosDTO){
-        Optional <Alimentos> buscar = alimentosRepository.findByNome(nome);
+        Optional <Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
 
         if(buscar.isEmpty()){
             throw new AlimentoNotFoundExeption("Alimento não encontrado");
@@ -37,7 +37,7 @@ public class AlimentosService {
     }
     @Transactional
     public void deletar(String nome){
-        Optional<Alimentos> buscar =  alimentosRepository.findByNome(nome);
+        Optional<Alimentos> buscar =  alimentosRepository.findByNomeIgnoreCase(nome);
 
         if(buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
 

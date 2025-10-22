@@ -1,5 +1,6 @@
 package com.caiodev.planosalimentares.Controller;
 
+import com.caiodev.planosalimentares.DTO.CriaRefeicaoDTO;
 import com.caiodev.planosalimentares.DTO.RefeicaoDTO;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import com.caiodev.planosalimentares.Model.Entity.Alimentos;
@@ -22,15 +23,11 @@ public class RefeicaoController {
         this.refeicaoService = refeicaoService;
     }
 
-    @PostMapping("/cadastrarAlimento")
-    public ResponseEntity<Refeicao> cadastrarAlimento(TipoRefeicoes tipoRefeicoes, String nomeAlimento){
-        return ResponseEntity.status(HttpStatus.CREATED).body(refeicaoService.cadastrarAlimento(nomeAlimento, tipoRefeicoes));
+    @PostMapping("/cadastrarRefeicao")
+    public ResponseEntity<Refeicao> cadastrarRefeicao(@RequestBody CriaRefeicaoDTO criaRefeicaoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(refeicaoService.cadastrarRefeicao(criaRefeicaoDTO));
     }
 
-    @PostMapping("/criar")
-    public ResponseEntity<Refeicao> cadastrarRefeicao(@RequestBody RefeicaoDTO refeicaoDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(refeicaoService.criar(refeicaoDTO));
-    }
 
     @DeleteMapping("/deletar/{tipoRefeicoes}")
     public ResponseEntity<Void> deletar(@PathVariable TipoRefeicoes tipoRefeicoes){

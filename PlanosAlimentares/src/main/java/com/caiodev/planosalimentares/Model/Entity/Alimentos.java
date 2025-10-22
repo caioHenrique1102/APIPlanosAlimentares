@@ -17,6 +17,7 @@ public class Alimentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    @Column(unique = true, nullable = false)
     private String nome;
     private String quantidade;
 
