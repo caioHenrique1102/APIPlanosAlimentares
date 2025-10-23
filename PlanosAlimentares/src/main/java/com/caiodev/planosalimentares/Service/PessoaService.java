@@ -7,17 +7,21 @@ import com.caiodev.planosalimentares.Model.Repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PessoaService {
-    private PessoaRepository pessoaRepository;
+    private final RestClient.Builder builder;
+    private final PessoaRepository pessoaRepository;
 
-    public PessoaService(PessoaRepository pessoaRepository) {
+    public PessoaService(PessoaRepository pessoaRepository, RestClient.Builder builder) {
         this.pessoaRepository = pessoaRepository;
+        this.builder = builder;
     }
+
     @Transactional
     public Pessoa cadastrar(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
@@ -25,24 +29,18 @@ public class PessoaService {
 
     public Pessoa buscar(String nome) {
         Optional<Pessoa> acharPessoa = pessoaRepository.findByNome(nome);
-        if (acharPessoa.isEmpty()) {
-            throw new PessoaNotFoundExeption("Pessoa não encontrada");
-        }
-        // vai pegar oque está dentro da "caixa" optional
+        if (acharPessoa.isEmpty()) throw new PessoaNotFoundExeption("Pessoa não encontrada");
         return acharPessoa.get();
-
     }
+
     //usado para proteção de dados para garantir a regra do "Tudo ou Nada".
     //Commit: Se tudo der certo, salva as mudanças.
     //Rollback: Se algo der errado, desfaz tudo.
     @Transactional
     public void deletar(String nome) {
         Optional<Pessoa> pessoaExiste = pessoaRepository.findByNome(nome);
-        if(pessoaExiste.isEmpty()){
-            throw new PessoaNotFoundExeption("Pessoa não encontrada");
-        }
+        if (pessoaExiste.isEmpty()) throw new PessoaNotFoundExeption("Pessoa não encontrada");
         Pessoa pessoa = pessoaExiste.get();
-
         pessoaRepository.delete(pessoa);
     }
 
@@ -50,19 +48,19 @@ public class PessoaService {
         Sort sort = Sort.by(Sort.Direction.ASC, "nome");
         return pessoaRepository.findAll(sort);
     }
-    @Transactional
-    public Pessoa alterar(String nome, PessoaDTO pessoaDTO) {
-        Optional<Pessoa> acharPessoa = pessoaRepository.findByNome(nome);
-        if (acharPessoa.isEmpty()) {
-            throw new PessoaNotFoundExeption("Pessoa não encontrada");
-        }
 
-      //Pessoa vai ser == a pessoa que estamos procuarando
-        Pessoa pessoa = acharPessoa.get();
-        pessoa.setAltura(pessoaDTO.altura());
-        pessoa.setIdade(pessoaDTO.idade());
-        pessoa.setNome(pessoaDTO.nome());
-        return pessoaRepository.save(pessoa);
+    @Transactional
+    public Pessoa alterar(String nome, Pessoa pessoa) {
+        Pessoa acharPessoa = buscar(nome);
+
+        Pessoa pessoaAtualizada = pessoa.builder()
+                .nome(pessoa.getNome() != null ? pessoa.getNome() : nome)
+                .altura(pessoa.getAltura() != null ? pessoa.getAltura() : acharPessoa.getAltura())
+                .idade(pessoa.getIdade() != null ? pessoa.getIdade() : acharPessoa.getIdade())
+                .build();
+
+
+        return pessoaRepository.save(pessoaAtualizada);
 
 
     }

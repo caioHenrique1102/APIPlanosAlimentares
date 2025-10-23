@@ -37,8 +37,8 @@ public class PessoaController {
     @Operation(summary = "Altera os dados da pessoa",
             description = "Usado para alterar todos os dados da pessoa pelo nome")
     @PutMapping("/alterar/{nome}")
-    public ResponseEntity<Pessoa> alterar(@RequestBody PessoaDTO pessoaDTO, @PathVariable String nome){
-      return ResponseEntity.status(HttpStatus.OK).body(pessoaService.alterar(nome, pessoaDTO));
+    public ResponseEntity<Pessoa> alterar(@RequestBody Pessoa pessoa, @PathVariable String nome){
+      return ResponseEntity.status(HttpStatus.OK).body(pessoaService.alterar(nome, pessoa));
     }
     @Operation(summary = "Busca a pessoa",
             description = "Usado para buscar a pessoa pelo nome")
