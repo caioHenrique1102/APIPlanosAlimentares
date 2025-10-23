@@ -18,7 +18,7 @@ public class PessoaService {
     public PessoaService(PessoaRepository pessoaRepository) {
         this.pessoaRepository = pessoaRepository;
     }
-
+    @Transactional
     public Pessoa cadastrar(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
     }
@@ -50,7 +50,7 @@ public class PessoaService {
         Sort sort = Sort.by(Sort.Direction.ASC, "nome");
         return pessoaRepository.findAll(sort);
     }
-
+    @Transactional
     public Pessoa alterar(String nome, PessoaDTO pessoaDTO) {
         Optional<Pessoa> acharPessoa = pessoaRepository.findByNome(nome);
         if (acharPessoa.isEmpty()) {

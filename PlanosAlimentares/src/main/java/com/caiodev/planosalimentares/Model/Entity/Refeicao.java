@@ -1,6 +1,5 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
-import com.caiodev.planosalimentares.DTO.RefeicaoDTO;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -26,10 +25,8 @@ public class Refeicao {
     @NotNull
     private List <Alimentos> alimentos = new ArrayList<>();
     @Enumerated(EnumType.STRING)
+    @Column(unique = true, nullable = false)
     private TipoRefeicoes tipoRefeicoes;
 
-    public Refeicao(RefeicaoDTO refeicaoDTO){
-        this.alimentos = refeicaoDTO.alimentos();
-        this.tipoRefeicoes = refeicaoDTO.tipoRefeicoes();
-    }
+
 }

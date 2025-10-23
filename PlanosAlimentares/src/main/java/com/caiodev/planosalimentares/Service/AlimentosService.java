@@ -16,7 +16,7 @@ public class AlimentosService {
     public AlimentosService(AlimentosRepository alimentosRepository) {
         this.alimentosRepository = alimentosRepository;
     }
-
+    @Transactional
     public Alimentos cadastrar(Alimentos alimentos){
         return alimentosRepository.save(alimentos);
     }
