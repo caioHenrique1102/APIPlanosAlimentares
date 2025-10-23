@@ -32,7 +32,11 @@ public class RefeicaoController {
         return ResponseEntity.status(HttpStatus.GONE).build();
     }
 
-
+    @PutMapping("/deletarAlimento/{tipoRefeicoes}")
+    public ResponseEntity<Void> deletarAliemento(@PathVariable TipoRefeicoes tipoRefeicoes, String nomeAlimento){
+       refeicaoService.deletarAlimento(tipoRefeicoes, nomeAlimento);
+        return ResponseEntity.status(HttpStatus.GONE).build();
+    }
 
     @PutMapping("/alterar/{tipoRefeicoes}")
     public ResponseEntity<Refeicao> alterar(@PathVariable TipoRefeicoes tipoRefeicoes, @RequestBody CriaRefeicaoDTO criaRefeicaoDTO){

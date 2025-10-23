@@ -21,7 +21,7 @@ public class Refeicao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToMany
+    @ManyToMany
     @NotNull
     private List <Alimentos> alimentos = new ArrayList<>();
     @Enumerated(EnumType.STRING)

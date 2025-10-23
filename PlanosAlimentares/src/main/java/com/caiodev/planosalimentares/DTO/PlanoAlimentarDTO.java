@@ -1,4 +1,6 @@
 package com.caiodev.planosalimentares.DTO;
 
-public record PlanoAlimentarDTO(){
+import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
+
+public record PlanoAlimentarDTO(TipoRefeicoes tipoRefeicoes){
 }

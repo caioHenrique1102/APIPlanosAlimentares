@@ -18,6 +18,8 @@ public class PlanoAlimentar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @Column(unique = true, nullable = false)
+    private String nome;
+    @ManyToMany
     private List<Refeicao> refeicao;
 }

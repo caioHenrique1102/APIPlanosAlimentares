@@ -57,6 +57,20 @@ public class RefeicaoService {
         return refeicaoRepository.save(refeicao);
     }
 
+    @Transactional
+    public void deletarAlimento(TipoRefeicoes tipoRefeicoes, String nomeAlimento) {
+        Refeicao refeicao = refeicaoRepository.findByTipoRefeicoes(tipoRefeicoes)
+                .orElseThrow(() -> new RefeicaoNotFoundExeption("Refeição não encontrada"));
+        Alimentos alimentos = alimentosRepository.findByNomeIgnoreCase(nomeAlimento)
+                .orElseThrow(() -> new AlimentoNotFoundExeption("Alimento não econtrado"));
+        if (refeicao.getAlimentos().contains(alimentos)) {
+            refeicao.getAlimentos().remove(alimentos);
+        } else {
+            throw new RuntimeException("O alimento não está nessa refeição");
+        }
+        refeicaoRepository.save(refeicao);
+    }
+
     public List<Refeicao> listar() {
         return refeicaoRepository.findAll();
     }
