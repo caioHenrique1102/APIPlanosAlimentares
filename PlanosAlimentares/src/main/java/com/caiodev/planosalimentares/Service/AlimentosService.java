@@ -11,35 +11,36 @@ import java.util.Optional;
 
 @Service
 public class AlimentosService {
-    private AlimentosRepository alimentosRepository;
+    private final AlimentosRepository alimentosRepository;
 
     public AlimentosService(AlimentosRepository alimentosRepository) {
         this.alimentosRepository = alimentosRepository;
     }
+
     @Transactional
-    public Alimentos cadastrar(Alimentos alimentos){
+    public Alimentos cadastrar(Alimentos alimentos) {
         return alimentosRepository.save(alimentos);
     }
 
     @Transactional
-    public Alimentos alterar(String nome,AlimentosDTO alimentosDTO){
-        Optional <Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
+    public Alimentos alterar(String nome, AlimentosDTO alimentosDTO) {
+        Optional<Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
 
-        if(buscar.isEmpty()){
-            throw new AlimentoNotFoundExeption("Alimento não encontrado");
-        }
-        
+        if (buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
+
+
         Alimentos alimentos = buscar.get();
-        alimentos.setNome(alimentosDTO.nome());
-        alimentos.setQuantidade(alimentosDTO.quantidade());
+        alimentos.setNome(alimentosDTO.nome() != null ? alimentosDTO.nome() : alimentos.getNome());
+        alimentos.setQuantidade(alimentosDTO.quantidade() != null ? alimentosDTO.quantidade() : alimentos.getQuantidade());
         return alimentosRepository.save(alimentos);
 
     }
-    @Transactional
-    public void deletar(String nome){
-        Optional<Alimentos> buscar =  alimentosRepository.findByNomeIgnoreCase(nome);
 
-        if(buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
+    @Transactional
+    public void deletar(String nome) {
+        Optional<Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
+
+        if (buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
 
         Alimentos alimentos = buscar.get();
         alimentosRepository.delete(alimentos);

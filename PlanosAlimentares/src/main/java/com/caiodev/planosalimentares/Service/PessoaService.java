@@ -53,15 +53,10 @@ public class PessoaService {
     public Pessoa alterar(String nome, Pessoa pessoa) {
         Pessoa acharPessoa = buscar(nome);
 
-        Pessoa pessoaAtualizada = pessoa.builder()
-                .nome(pessoa.getNome() != null ? pessoa.getNome() : nome)
-                .altura(pessoa.getAltura() != null ? pessoa.getAltura() : acharPessoa.getAltura())
-                .idade(pessoa.getIdade() != null ? pessoa.getIdade() : acharPessoa.getIdade())
-                .build();
+       acharPessoa.setNome(pessoa.getNome() != null ? pessoa.getNome() : acharPessoa.getNome());
+       acharPessoa.setIdade(pessoa.getIdade() != null ? pessoa.getIdade() : acharPessoa.getIdade());
+       acharPessoa.setAltura(pessoa.getAltura() != null ? pessoa.getAltura() : acharPessoa.getAltura());
 
-
-        return pessoaRepository.save(pessoaAtualizada);
-
-
+       return pessoaRepository.save(acharPessoa);
     }
 }

@@ -52,8 +52,8 @@ public class RefeicaoService {
 
         //.stream() -> cria um fluxo com 1 item (se achou) ou 0 itens (se estava vazio)
         //.toList() -> transforma esse fluxo em uma List
-        refeicao.setAlimentos(alimentos.stream().toList());
-        refeicao.setTipoRefeicoes(criaRefeicaoDTO.tipoRefeicoes());
+        refeicao.setAlimentos(alimentos.stream().toList() != null ? alimentos.stream().toList() : refeicao.getAlimentos());
+        refeicao.setTipoRefeicoes(criaRefeicaoDTO.tipoRefeicoes() != null ? criaRefeicaoDTO.tipoRefeicoes() : refeicao.getTipoRefeicoes());
         return refeicaoRepository.save(refeicao);
     }
 
