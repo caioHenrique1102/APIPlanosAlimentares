@@ -1,5 +1,6 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
+import com.caiodev.planosalimentares.DTO.CriarPlanoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,9 @@ public class PlanoAlimentar {
     private String nome;
     @ManyToMany
     private List<Refeicao> refeicao;
+
+    public PlanoAlimentar(CriarPlanoDTO criarPlanoDTO) {
+        this.nome = criarPlanoDTO.nome();
+    }
+
 }

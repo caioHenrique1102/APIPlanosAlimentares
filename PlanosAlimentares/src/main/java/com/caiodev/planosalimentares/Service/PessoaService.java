@@ -1,30 +1,42 @@
 package com.caiodev.planosalimentares.Service;
 
-import com.caiodev.planosalimentares.DTO.PessoaDTO;
+
 import com.caiodev.planosalimentares.Exception.PessoaNotFoundExeption;
+import com.caiodev.planosalimentares.Exception.PlanoAlimentarNotFound;
 import com.caiodev.planosalimentares.Model.Entity.Pessoa;
+import com.caiodev.planosalimentares.Model.Entity.PlanoAlimentar;
 import com.caiodev.planosalimentares.Model.Repository.PessoaRepository;
+import com.caiodev.planosalimentares.Model.Repository.PlanoAlimentarRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PessoaService {
-    private final RestClient.Builder builder;
-    private final PessoaRepository pessoaRepository;
 
-    public PessoaService(PessoaRepository pessoaRepository, RestClient.Builder builder) {
+    private final PessoaRepository pessoaRepository;
+    private final PlanoAlimentarRepository planoAlimentarRepository;
+
+    public PessoaService(PessoaRepository pessoaRepository, PlanoAlimentarRepository planoAlimentarRepository) {
         this.pessoaRepository = pessoaRepository;
-        this.builder = builder;
+        this.planoAlimentarRepository = planoAlimentarRepository;
     }
 
     @Transactional
     public Pessoa cadastrar(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
+    }
+
+    @Transactional
+    public void cadastrarPlano(String nomePlano, String nomePessoa) {
+        Pessoa pessoa = buscar(nomePessoa);
+        PlanoAlimentar planoAlimentar = planoAlimentarRepository.findByNome(nomePlano)
+                .orElseThrow(() -> new PlanoAlimentarNotFound("Plano não encontrado"));
+        pessoa.setPlanoAlimentar(planoAlimentar);
+        pessoaRepository.save(pessoa);
     }
 
     public Pessoa buscar(String nome) {
@@ -53,10 +65,10 @@ public class PessoaService {
     public Pessoa alterar(String nome, Pessoa pessoa) {
         Pessoa acharPessoa = buscar(nome);
 
-       acharPessoa.setNome(pessoa.getNome() != null ? pessoa.getNome() : acharPessoa.getNome());
-       acharPessoa.setIdade(pessoa.getIdade() != null ? pessoa.getIdade() : acharPessoa.getIdade());
-       acharPessoa.setAltura(pessoa.getAltura() != null ? pessoa.getAltura() : acharPessoa.getAltura());
+        acharPessoa.setNome(pessoa.getNome() != null ? pessoa.getNome() : acharPessoa.getNome());
+        acharPessoa.setIdade(pessoa.getIdade() != null ? pessoa.getIdade() : acharPessoa.getIdade());
+        acharPessoa.setAltura(pessoa.getAltura() != null ? pessoa.getAltura() : acharPessoa.getAltura());
 
-       return pessoaRepository.save(acharPessoa);
+        return pessoaRepository.save(acharPessoa);
     }
 }

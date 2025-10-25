@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface PlanoAlimentarRepository extends JpaRepository<PlanoAlimentar, Long> {
     Optional <PlanoAlimentar> findByNome(String nomePlano);
+
+    void deleteByNome(String nome);
 }

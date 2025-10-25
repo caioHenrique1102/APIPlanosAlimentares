@@ -10,7 +10,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
