@@ -1,6 +1,5 @@
 package com.caiodev.planosalimentares.Service;
 
-import com.caiodev.planosalimentares.DTO.CriarPlanoDTO;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import com.caiodev.planosalimentares.Exception.PlanoAlimentarNotFound;
 import com.caiodev.planosalimentares.Exception.RefeicaoNotFoundExeption;

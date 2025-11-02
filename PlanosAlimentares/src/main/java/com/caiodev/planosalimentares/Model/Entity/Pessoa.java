@@ -1,6 +1,6 @@
 package com.caiodev.planosalimentares.Model.Entity;
 
-import com.caiodev.planosalimentares.DTO.PessoaDTO;
+import com.caiodev.planosalimentares.DTO.Request.PessoaDTORequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ public class Pessoa {
     @OneToOne
     private PlanoAlimentar planoAlimentar;
     
-    public Pessoa(PessoaDTO pessoaDTO){
+    public Pessoa(PessoaDTORequest pessoaDTO){
         this.altura = pessoaDTO.altura();
         this.nome = pessoaDTO.nome();
         this.idade = pessoaDTO.idade();

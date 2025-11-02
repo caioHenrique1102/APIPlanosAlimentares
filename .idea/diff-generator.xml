@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DiffGenerationConfig">
+    <option name="snapshotDb" value="false" />
+    <option name="snapshotDbValue" value="bb9dacb9-7881-4245-b443-38b7e97800f3" />
+    <option name="snapshotModelValue" value="PlanosAlimentares:PlanosAlimentares" />
+    <option name="sourceModelValue" value="PlanosAlimentares:PlanosAlimentares" />
+    <option name="targetDbValue" value="bb9dacb9-7881-4245-b443-38b7e97800f3" />
+  </component>
+</project>

@@ -1,6 +1,6 @@
 package com.caiodev.planosalimentares.Service;
 
-import com.caiodev.planosalimentares.DTO.CriaRefeicaoDTO;
+import com.caiodev.planosalimentares.DTO.Request.CriaRefeicaoDTORequest;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import com.caiodev.planosalimentares.Exception.AlimentoNotFoundExeption;
 import com.caiodev.planosalimentares.Exception.RefeicaoNotFoundExeption;
@@ -25,7 +25,7 @@ public class RefeicaoService {
     }
 
     @Transactional
-    public Refeicao cadastrarRefeicao(CriaRefeicaoDTO criaRefeicaoDTO) {
+    public Refeicao cadastrarRefeicao(CriaRefeicaoDTORequest criaRefeicaoDTO) {
         System.out.println("PROCURANDO POR ALIMENTO " + "[" + criaRefeicaoDTO.nomeAlimento() + "]");
         Refeicao refeicao = new Refeicao();
         Alimentos alimentos = alimentosRepository.findByNomeIgnoreCase(criaRefeicaoDTO.nomeAlimento())
@@ -41,7 +41,7 @@ public class RefeicaoService {
     }
 
     @Transactional
-    public Refeicao alterar(TipoRefeicoes tipoRefeicoes, CriaRefeicaoDTO criaRefeicaoDTO) {
+    public Refeicao alterar(TipoRefeicoes tipoRefeicoes, CriaRefeicaoDTORequest criaRefeicaoDTO) {
 
         Optional<Refeicao> buscar = refeicaoRepository.findByTipoRefeicoes(tipoRefeicoes);
         if (buscar.isEmpty()) throw new RefeicaoNotFoundExeption("Refeição não encontrada");

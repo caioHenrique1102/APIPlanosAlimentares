@@ -1,6 +1,6 @@
 package com.caiodev.planosalimentares.Controller;
 
-import com.caiodev.planosalimentares.DTO.PessoaDTO;
+import com.caiodev.planosalimentares.DTO.Request.PessoaDTORequest;
 import com.caiodev.planosalimentares.Model.Entity.Pessoa;
 import com.caiodev.planosalimentares.Service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,7 @@ public class PessoaController {
     @Operation(summary = "Cria uma nova pessoa",
             description = "Usado para cadastrar uma pessoa que tem um plano alimentar")
     @PostMapping("/cadastro")
-    public ResponseEntity<Pessoa> cadastrar(@RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<Pessoa> cadastrar(@RequestBody PessoaDTORequest pessoaDTO) {
         Pessoa pessoa = new Pessoa(pessoaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.cadastrar(pessoa));
     }

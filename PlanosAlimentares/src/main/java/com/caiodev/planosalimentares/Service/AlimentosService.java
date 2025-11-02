@@ -1,6 +1,6 @@
 package com.caiodev.planosalimentares.Service;
 
-import com.caiodev.planosalimentares.DTO.AlimentosDTO;
+import com.caiodev.planosalimentares.DTO.Request.AlimentosDTORequest;
 import com.caiodev.planosalimentares.Exception.AlimentoNotFoundExeption;
 import com.caiodev.planosalimentares.Model.Entity.Alimentos;
 import com.caiodev.planosalimentares.Model.Repository.AlimentosRepository;
@@ -23,7 +23,7 @@ public class AlimentosService {
     }
 
     @Transactional
-    public Alimentos alterar(String nome, AlimentosDTO alimentosDTO) {
+    public Alimentos alterar(String nome, AlimentosDTORequest alimentosDTO) {
         Optional<Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
 
         if (buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");

@@ -1,8 +1,7 @@
 package com.caiodev.planosalimentares.Controller;
 
-import com.caiodev.planosalimentares.DTO.CriaRefeicaoDTO;
+import com.caiodev.planosalimentares.DTO.Request.CriaRefeicaoDTORequest;
 import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
-import com.caiodev.planosalimentares.Model.Entity.Alimentos;
 import com.caiodev.planosalimentares.Model.Entity.Refeicao;
 import com.caiodev.planosalimentares.Service.RefeicaoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +22,7 @@ public class RefeicaoController {
     @Operation(summary = "Cria refeições",
     description = "Cria uma refeição baseada em uma lista de alimentos e no tipo da refeição")
     @PostMapping("/cadastrarRefeicao")
-    public ResponseEntity<Refeicao> cadastrarRefeicao(@RequestBody CriaRefeicaoDTO criaRefeicaoDTO){
+    public ResponseEntity<Refeicao> cadastrarRefeicao(@RequestBody CriaRefeicaoDTORequest criaRefeicaoDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(refeicaoService.cadastrarRefeicao(criaRefeicaoDTO));
     }
 
@@ -44,7 +43,7 @@ public class RefeicaoController {
     @Operation(summary = "Altera a refeição",
             description = "Altera a refeição por completo, tanto os alimentos quanto o tipo")
     @PutMapping("/alterar/{tipoRefeicoes}")
-    public ResponseEntity<Refeicao> alterar(@PathVariable TipoRefeicoes tipoRefeicoes, @RequestBody CriaRefeicaoDTO criaRefeicaoDTO){
+    public ResponseEntity<Refeicao> alterar(@PathVariable TipoRefeicoes tipoRefeicoes, @RequestBody CriaRefeicaoDTORequest criaRefeicaoDTO){
         return ResponseEntity.status(200).body(refeicaoService.alterar(tipoRefeicoes, criaRefeicaoDTO));
     }
     @Operation(summary = "Lista as refeições",

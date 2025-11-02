@@ -1,5 +1,5 @@
 package com.caiodev.planosalimentares.Controller;
-import com.caiodev.planosalimentares.DTO.AlimentosDTO;
+import com.caiodev.planosalimentares.DTO.Request.AlimentosDTORequest;
 import com.caiodev.planosalimentares.Model.Entity.Alimentos;
 import com.caiodev.planosalimentares.Service.AlimentosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,14 +18,14 @@ public class AlimentosController {
     @Operation(summary = "Cria um alimento" ,
             description = "Salva alimentos no banco de dados, com informações como nome e quantidade")
     @PostMapping("/criar")
-    public ResponseEntity<Alimentos> criar(@RequestBody AlimentosDTO alimentosDTO){
+    public ResponseEntity<Alimentos> criar(@RequestBody AlimentosDTORequest alimentosDTO){
         Alimentos alimentos = new Alimentos(alimentosDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(alimentosService.cadastrar(alimentos));
     }
 @Operation(summary = "Altera os aliementos" ,
     description = "Altera todas as informações dos alimentos e salva no banco de dados")
     @PutMapping("/alterar/{nome}")
-    public ResponseEntity<Alimentos> alterar(@PathVariable String nome, @RequestBody AlimentosDTO alimentosDTO){
+    public ResponseEntity<Alimentos> alterar(@PathVariable String nome, @RequestBody AlimentosDTORequest alimentosDTO){
         return ResponseEntity.status(HttpStatus.OK).body(alimentosService.alterar(nome, alimentosDTO));
     }
 @Operation(summary = "Deleta alimentos",
