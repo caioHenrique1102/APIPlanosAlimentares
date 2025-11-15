@@ -41,8 +41,9 @@ public class AuthController {
         UsernamePasswordAuthenticationToken userPass = new UsernamePasswordAuthenticationToken(usuarioDTORequest.usuario() , usuarioDTORequest.senha());
         Authentication authentication = authenticationManager.authenticate(userPass);
         Usuario usuario = (Usuario) authentication.getPrincipal();
-        String token = tokenConfig.generateToken(usuario);
-        return ResponseEntity.ok().body(new UsuarioDTOResponse(token));
+        String acessToken = tokenConfig.AcessToken(usuario);
+        String refreshToken = tokenConfig.RefreshToken(usuario);
+        return ResponseEntity.ok().body(new UsuarioDTOResponse(acessToken, refreshToken));
     }
 
     @PostMapping("/register")

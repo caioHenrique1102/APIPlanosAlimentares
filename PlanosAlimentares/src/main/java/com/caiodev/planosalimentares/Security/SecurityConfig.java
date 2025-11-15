@@ -1,29 +1,33 @@
 package com.caiodev.planosalimentares.Security;
 
 import jakarta.servlet.DispatcherType;
-import org.springdoc.core.properties.SwaggerUiConfigProperties;
+
+import org.springdoc.core.converters.AdditionalModelsConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.CorsDsl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.Locale;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 //diz ao spring que contem um bean de configuração
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final SecurityFilter securityFilter;
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AdditionalModelsConverter additionalModelsConverter) throws Exception {
         return http
                 //desativa uma proteção para apis rest que não usam formulario
                 .csrf(csrf  -> csrf.disable())
@@ -35,7 +39,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                         .anyRequest().authenticated())
-                .build();
+                        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                        .build();
     }
 
     @Bean
