@@ -5,6 +5,7 @@ import com.caiodev.planosalimentares.Enum.TipoRefeicoes;
 import com.caiodev.planosalimentares.Model.Entity.Refeicao;
 import com.caiodev.planosalimentares.Service.RefeicaoService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class RefeicaoController {
     @Operation(summary = "Altera a refeição",
             description = "Altera a refeição por completo, tanto os alimentos quanto o tipo")
     @PutMapping("/alterar/{tipoRefeicoes}")
-    public ResponseEntity<Refeicao> alterar(@PathVariable TipoRefeicoes tipoRefeicoes, @RequestBody CriaRefeicaoDTORequest criaRefeicaoDTO){
+    public ResponseEntity<Refeicao> alterar(@PathVariable TipoRefeicoes tipoRefeicoes, @Valid  @RequestBody CriaRefeicaoDTORequest criaRefeicaoDTO){
         return ResponseEntity.status(200).body(refeicaoService.alterar(tipoRefeicoes, criaRefeicaoDTO));
     }
     @Operation(summary = "Lista as refeições",

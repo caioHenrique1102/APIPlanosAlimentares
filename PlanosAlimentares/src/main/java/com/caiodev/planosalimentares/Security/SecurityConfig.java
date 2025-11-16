@@ -1,8 +1,6 @@
 package com.caiodev.planosalimentares.Security;
 
 import jakarta.servlet.DispatcherType;
-
-import org.springdoc.core.converters.AdditionalModelsConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,7 +25,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, AdditionalModelsConverter additionalModelsConverter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 //desativa uma proteção para apis rest que não usam formulario
                 .csrf(csrf  -> csrf.disable())

@@ -23,15 +23,14 @@ public class AlimentosService {
     }
 
     @Transactional
-    public Alimentos alterar(String nome, AlimentosDTORequest alimentosDTO) {
+    public Alimentos alterar(String nome, Alimentos alimentos) {
         Optional<Alimentos> buscar = alimentosRepository.findByNomeIgnoreCase(nome);
 
         if (buscar.isEmpty()) throw new AlimentoNotFoundExeption("Alimento não encontrado");
 
-
-        Alimentos alimentos = buscar.get();
-        alimentos.setNome(alimentosDTO.nome() != null ? alimentosDTO.nome() : alimentos.getNome());
-        alimentos.setQuantidade(alimentosDTO.quantidade() != null ? alimentosDTO.quantidade() : alimentos.getQuantidade());
+        Alimentos alimento = buscar.get();
+        alimentos.setNome(alimentos.getNome() != null ? alimentos.getNome() : alimento.getNome());
+        alimentos.setQuantidade(alimentos.getQuantidade() != null ? alimentos.getQuantidade() : alimento.getQuantidade());
         return alimentosRepository.save(alimentos);
 
     }

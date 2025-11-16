@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.util.Strings;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -25,17 +25,18 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizedHeader = request.getHeader("Authorization");
-        if (Strings.isEmpty(authorizedHeader) && authorizedHeader.startsWith("Bearer")) {
+        if (authorizedHeader == null || !authorizedHeader.startsWith("Bearer")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             String token = authorizedHeader.substring("Bearer".length());
             Optional<JWTUserData> optUser = tokenConfig.validateToken(token);
-            if (optUser.isPresent()) {
-                JWTUserData jwtUserData = optUser.get();
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(jwtUserData, null, null);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            } else {
-                filterChain.doFilter(request, response);
-            }
+        if (optUser.isPresent()) {
+            JWTUserData jwtUserData = optUser.get();
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(jwtUserData, null, null);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        filterChain.doFilter(request, response);
     }
 }
